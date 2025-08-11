@@ -1,0 +1,23 @@
+{
+  "name": "phaser-tutorial-online-reader",
+  "version": "1.0.0",
+  "description": "在线阅读系统 - Phaser.js 7天教程小册",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 3000"
+  },
+  "dependencies": {
+    "marked": "^12.0.0",
+    "highlight.js": "^11.9.0",
+    "mermaid": "^10.8.0",
+    "copy-to-clipboard": "^3.3.3"
+  },
+  "devDependencies": {
+    "vite": "^5.1.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vue": "^3.4.0"
+  }
+}

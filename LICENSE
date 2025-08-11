@@ -1,0 +1,104 @@
+MIT License
+
+Copyright (c) 2024 Phaser Tutorial Handbook
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## 第三方许可证
+
+本项目使用了以下第三方库和资源：
+
+### Phaser.js
+- 许可证: MIT License
+- 版权: Copyright (c) 2024 Photon Storm Ltd.
+- 链接: https://github.com/photonstorm/phaser
+
+### Vite
+- 许可证: MIT License  
+- 版权: Copyright (c) 2019-present, Yuxi (Evan) You and Vite contributors
+- 链接: https://github.com/vitejs/vite
+
+### Vue.js (在线阅读器)
+- 许可证: MIT License
+- 版权: Copyright (c) 2014-present Evan You
+- 链接: https://github.com/vuejs/vue
+
+### Puppeteer (PDF生成)
+- 许可证: Apache License 2.0
+- 版权: Copyright 2017 Google Inc.
+- 链接: https://github.com/puppeteer/puppeteer
+
+### Nodemailer (邮件系统)
+- 许可证: MIT License
+- 版权: Copyright (c) 2011-2024 Andris Reinman
+- 链接: https://github.com/nodemailer/nodemailer
+
+### Vitest (测试框架)
+- 许可证: MIT License
+- 版权: Copyright (c) 2021-present Anthony Fu
+- 链接: https://github.com/vitest-dev/vitest
+
+### Playwright (浏览器测试)
+- 许可证: Apache License 2.0
+- 版权: Copyright Microsoft Corporation
+- 链接: https://github.com/microsoft/playwright
+
+## 游戏资源许可
+
+### 音频资源
+本项目中的示例音频文件来源于：
+- Freesound.org (CC0 License)
+- OpenGameArt.org (CC0/CC BY 3.0 License)
+- 自制音效 (MIT License)
+
+### 图像资源
+本项目中的示例图像文件来源于：
+- OpenGameArt.org (CC0/CC BY 3.0 License)
+- Kenney.nl (CC0 License)
+- 自制图像 (MIT License)
+
+### 字体资源
+- 默认字体使用系统字体
+- 特殊字体标注具体许可证信息
+
+## 商业使用说明
+
+本项目基于 MIT 许可证，允许商业使用，但请注意：
+
+1. **教程内容**: 可以在商业培训、课程中使用，但请注明来源
+2. **代码示例**: 可以在商业项目中使用和修改
+3. **游戏资源**: 请检查具体资源的许可证，部分资源可能有使用限制
+4. **品牌标识**: 项目名称和标识仅供学习使用，商业使用请联系作者
+
+## 免责声明
+
+本项目仅供学习和教育目的使用。作者不对使用本项目代码或内容产生的任何直接或间接损失承担责任。
+
+使用者应当：
+- 遵守相关法律法规
+- 尊重第三方知识产权
+- 承担使用风险和责任
+
+## 联系方式
+
+如有许可证相关问题，请联系：
+- 邮箱: [your-email@example.com](mailto:your-email@example.com)
+- GitHub: [项目地址](https://github.com/your-repo/phaser-tutorial-handbook)

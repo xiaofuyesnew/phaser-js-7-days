@@ -1,0 +1,41 @@
+{
+  "name": "phaser-tutorial-day-template",
+  "version": "1.0.0",
+  "description": "Phaser.js 7天教程 - 项目模板",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "clean": "rm -rf dist node_modules",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,md}"
+  },
+  "keywords": [
+    "phaser",
+    "game-development",
+    "html5-game",
+    "javascript",
+    "tutorial"
+  ],
+  "author": "Phaser Tutorial Handbook",
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
