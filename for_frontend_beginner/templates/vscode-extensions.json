@@ -1,0 +1,41 @@
+{
+  "recommendations": [
+    "ms-ceintl.vscode-language-pack-zh-hans",
+    "formulahendry.auto-rename-tag",
+    "oderwat.indent-rainbow",
+    "pkief.material-icon-theme",
+    "dsznajder.es7-react-js-snippets",
+    "xabikos.javascriptsnippets",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "eamodio.gitlens",
+    "donjayamanne.githistory",
+    "mhutchie.git-graph",
+    "ritwickdey.liveserver",
+    "rangav.vscode-thunder-client",
+    "ms-vscode.vscode-json",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "gruntfuggly.todo-tree",
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+    "formulahendry.auto-close-tag",
+    "ms-vscode.vscode-typescript-next",
+    "ms-vscode.live-server",
+    "humao.rest-client",
+    "bierner.markdown-preview-github-styles",
+    "yzhang.markdown-all-in-one",
+    "shd101wyy.markdown-preview-enhanced",
+    "ms-vscode.vscode-json",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.code-runner",
+    "ms-vscode.vscode-eslint",
+    "ms-vscode.vscode-typescript-next"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript",
+    "hookyqr.beautify"
+  ]
+}

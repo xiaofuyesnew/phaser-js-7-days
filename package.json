@@ -1,0 +1,115 @@
+{
+  "name": "phaser-tutorial-handbook",
+  "version": "1.0.0",
+  "description": "七天速通 Phaser.js 游戏开发 - 完整的游戏开发教程小册",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "echo '请选择具体的项目目录运行开发服务器'",
+    "build": "node scripts/deploy.js --skip-tests",
+    "deploy": "node scripts/deploy.js",
+    "deploy:github": "node scripts/deploy.js",
+    "deploy:vercel": "node scripts/deploy.js --vercel",
+    "deploy:netlify": "node scripts/deploy.js --netlify",
+    "test": "cd testing && pnpm test",
+    "test:all": "cd testing && pnpm test && pnpm test:content && pnpm test:browser",
+    "setup": "node project-template/setup-project.js",
+    "setup:env": "node for_frontend_beginner/scripts/check-environment.js",
+    "optimize": "node scripts/optimize-cdn.js",
+    "domain:setup": "node scripts/setup-domain.js setup",
+    "domain:test": "node scripts/setup-domain.js test",
+    "domain:remove": "node scripts/setup-domain.js remove",
+    "pdf:generate": "cd pdf-generator && pnpm install && node src/cli.js --all",
+    "reader:dev": "cd online-reader && pnpm dev",
+    "reader:build": "cd online-reader && pnpm build",
+    "email:start": "cd email-course && pnpm start",
+    "clean": "rimraf dist && rimraf */source/dist && rimraf */dist",
+    "lint": "eslint . --ext .js,.vue --ignore-path .gitignore",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "prepare": "husky install",
+    "release": "standard-version",
+    "postinstall": "echo '项目安装完成！运行 pnpm setup 初始化所有子项目'"
+  },
+  "keywords": [
+    "phaser",
+    "phaser.js",
+    "game-development",
+    "html5-games",
+    "javascript",
+    "tutorial",
+    "教程",
+    "游戏开发",
+    "前端",
+    "web-games"
+  ],
+  "author": {
+    "name": "Phaser Tutorial Team",
+    "email": "maintainer@example.com",
+    "url": "https://your-website.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/phaser-tutorial-handbook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/phaser-tutorial-handbook/issues"
+  },
+  "homepage": "https://your-repo.github.io/phaser-tutorial-handbook",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.19.2",
+    "gh-pages": "^6.1.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.5",
+    "standard-version": "^9.5.0"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "phaser": "^3.90.0"
+    }
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{md,json,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "standard-version": {
+    "scripts": {
+      "prebump": "pnpm test:all",
+      "precommit": "git add CHANGELOG.md"
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/your-username"
+  }
+}

@@ -1,0 +1,210 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 测试作业
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run tests
+        run: |
+          cd testing
+          pnpm install
+          pnpm test
+          
+      - name: Run content validation
+        run: |
+          cd testing
+          pnpm test:content
+          
+      - name: Run browser compatibility tests
+        run: |
+          cd testing
+          pnpm test:browser
+
+  # 构建作业
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Build online reader
+        run: |
+          cd online-reader
+          pnpm install
+          pnpm build
+          
+      - name: Generate PDFs
+        run: |
+          cd pdf-generator
+          pnpm install
+          node src/cli.js --all
+          
+      - name: Build all tutorial projects
+        run: |
+          for dir in */source; do
+            if [ -f "$dir/package.json" ]; then
+              echo "Building $dir"
+              cd "$dir"
+              pnpm install
+              pnpm build
+              cd ../..
+            fi
+          done
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Create deployment directory
+        run: |
+          mkdir -p dist
+          
+          # Copy online reader build
+          cp -r online-reader/dist/* dist/
+          
+          # Copy PDF files
+          mkdir -p dist/downloads
+          cp -r pdf-generator/dist/*.pdf dist/downloads/
+          
+          # Copy tutorial projects
+          for dir in */source; do
+            if [ -d "$dir/dist" ]; then
+              project_name=$(dirname "$dir")
+              mkdir -p "dist/demos/$project_name"
+              cp -r "$dir/dist"/* "dist/demos/$project_name/"
+            fi
+          done
+          
+          # Create index redirect
+          echo '<!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>七天速通 Phaser.js 游戏开发</title>
+            <meta http-equiv="refresh" content="0; url=./index.html">
+          </head>
+          <body>
+            <p>正在跳转到主页...</p>
+          </body>
+          </html>' > dist/index.html
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  # 部署作业
+  deploy:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # 发布作业
+  release:
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, 'release:')
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Extract version from commit message
+        id: version
+        run: |
+          VERSION=$(echo "${{ github.event.head_commit.message }}" | grep -oP 'release:\s*v?\K[\d.]+')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          release_name: Release v${{ steps.version.outputs.version }}
+          body: |
+            ## 🎉 新版本发布 v${{ steps.version.outputs.version }}
+            
+            ### 主要更新
+            - 查看 [CHANGELOG.md](CHANGELOG.md) 获取详细更新内容
+            
+            ### 下载方式
+            - 📖 [在线阅读](${{ steps.deployment.outputs.page_url }})
+            - 📄 [PDF下载](${{ steps.deployment.outputs.page_url }}downloads/)
+            - 🎮 [在线演示](${{ steps.deployment.outputs.page_url }}demos/)
+            
+            ### 快速开始
+            ```bash
+            git clone https://github.com/${{ github.repository }}.git
+            cd phaser-tutorial-handbook
+            pnpm install
+            node project-template/setup-project.js
+            ```
+          draft: false
+          prerelease: false

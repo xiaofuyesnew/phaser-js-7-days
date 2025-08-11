@@ -1,0 +1,482 @@
+/* 全局重置和基础样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* 防止移动端缩放和选择 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  /* 防止移动端点击高亮 */
+  -webkit-tap-highlight-color: transparent;
+  
+  /* 防止移动端长按菜单 */
+  -webkit-touch-callout: none;
+}
+
+/* 游戏容器 */
+#game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: inherit;
+}
+
+/* Canvas样式 */
+canvas {
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+  
+  /* 防止移动端拖拽 */
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/* 加载屏幕样式 */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.loading-content {
+  text-align: center;
+  max-width: 90%;
+}
+
+.loading-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+.loading-text {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+.loading-bar-container {
+  width: 200px;
+  height: 4px;
+  background: #333;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.loading-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  body {
+    /* 隐藏移动端地址栏 */
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  #game {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  .loading-icon {
+    font-size: 36px;
+  }
+  
+  .loading-text {
+    font-size: 20px;
+  }
+  
+  .loading-bar-container {
+    width: 150px;
+  }
+}
+
+/* 平板优化 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .loading-icon {
+    font-size: 56px;
+  }
+  
+  .loading-text {
+    font-size: 28px;
+  }
+  
+  .loading-bar-container {
+    width: 250px;
+  }
+}
+
+/* 桌面优化 */
+@media (min-width: 1025px) {
+  .loading-icon {
+    font-size: 64px;
+  }
+  
+  .loading-text {
+    font-size: 32px;
+  }
+  
+  .loading-bar-container {
+    width: 300px;
+  }
+}
+
+/* 横屏模式优化 */
+@media (orientation: landscape) and (max-height: 500px) {
+  .loading-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .loading-icon {
+    font-size: 32px;
+    margin-bottom: 0;
+  }
+  
+  .loading-text {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .loading-bar-container {
+    width: 120px;
+    height: 3px;
+  }
+}
+
+/* 高DPI屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  canvas {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+  
+  #loading-screen {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .loading-icon {
+    animation: none;
+  }
+}
+
+/* 错误屏幕样式 */
+.error-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.error-content {
+  text-align: center;
+  max-width: 90%;
+  padding: 20px;
+}
+
+.error-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  color: #ff6b6b;
+}
+
+.error-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #ff6b6b;
+  font-weight: 600;
+}
+
+.error-message {
+  font-size: 16px;
+  margin-bottom: 24px;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+.error-details {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.error-details summary {
+  cursor: pointer;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.error-details pre {
+  background: #000;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  overflow: auto;
+  margin-top: 10px;
+  color: #ff6b6b;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.error-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.error-button.primary {
+  background: #4CAF50;
+  color: white;
+}
+
+.error-button.primary:hover {
+  background: #45a049;
+}
+
+.error-button.secondary {
+  background: transparent;
+  color: #cccccc;
+  border: 1px solid #cccccc;
+}
+
+.error-button.secondary:hover {
+  background: #cccccc;
+  color: #1a1a1a;
+}
+
+/* 移动端错误屏幕优化 */
+@media (max-width: 768px) {
+  .error-icon {
+    font-size: 48px;
+  }
+  
+  .error-title {
+    font-size: 20px;
+  }
+  
+  .error-message {
+    font-size: 14px;
+  }
+  
+  .error-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .error-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .error-button {
+    width: 200px;
+  }
+}
+
+/* 性能监控UI样式 */
+.performance-monitor {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  z-index: 10000;
+  min-width: 280px;
+  backdrop-filter: blur(5px);
+}
+
+.performance-monitor h3 {
+  color: #4CAF50;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.performance-monitor .metric {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.performance-monitor .metric.warning {
+  color: #FF9800;
+}
+
+.performance-monitor .metric.error {
+  color: #F44336;
+}
+
+.performance-monitor .hint {
+  color: #888;
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+/* 触摸控制样式增强 */
+.touch-controls {
+  pointer-events: auto;
+}
+
+.touch-button {
+  transition: all 0.1s ease;
+  will-change: transform, opacity;
+}
+
+.touch-button:active {
+  transform: scale(0.95);
+}
+
+/* 全屏按钮样式 */
+.fullscreen-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.fullscreen-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+/* 隐藏桌面端的全屏按钮 */
+@media (min-width: 1025px) {
+  .fullscreen-button {
+    display: none;
+  }
+}
+
+/* 辅助功能 */
+@media (prefers-contrast: high) {
+  body {
+    background: #000;
+  }
+  
+  #loading-screen {
+    background: #000;
+  }
+  
+  .loading-bar {
+    background: #fff;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  #game, #loading-screen, .error-screen {
+    display: none;
+  }
+  
+  body::after {
+    content: "This is an interactive game that cannot be printed.";
+    display: block;
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+  }
+}

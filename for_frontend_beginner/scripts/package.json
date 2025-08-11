@@ -1,0 +1,29 @@
+{
+  "name": "phaser-environment-setup",
+  "version": "1.0.0",
+  "description": "Phaser.js 开发环境自动化搭建工具",
+  "main": "check-environment.js",
+  "scripts": {
+    "check": "node check-environment.js",
+    "setup": "node setup-project.js",
+    "install:unix": "chmod +x install-tools.sh && ./install-tools.sh",
+    "install:windows": "powershell -ExecutionPolicy Bypass -File install-tools.ps1"
+  },
+  "bin": {
+    "phaser-check": "./check-environment.js",
+    "phaser-setup": "./setup-project.js"
+  },
+  "keywords": [
+    "phaser",
+    "game-development",
+    "environment-setup",
+    "automation"
+  ],
+  "author": "Phaser Tutorial Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

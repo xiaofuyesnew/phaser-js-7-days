@@ -1,0 +1,194 @@
+{
+  "templates": {
+    "basic": {
+      "name": "基础 Phaser.js 项目",
+      "description": "包含基本场景和玩家控制的简单游戏模板",
+      "features": [
+        "菜单场景",
+        "游戏场景",
+        "基础物理系统",
+        "键盘控制",
+        "简单碰撞检测"
+      ],
+      "files": {
+        "package.json": {
+          "dependencies": {
+            "phaser": "^3.90.0"
+          },
+          "devDependencies": {
+            "vite": "^5.0.0",
+            "eslint": "^8.0.0"
+          }
+        }
+      }
+    },
+    "platformer": {
+      "name": "平台跳跃游戏模板",
+      "description": "包含地图、敌人、收集品的平台跳跃游戏模板",
+      "features": [
+        "Tilemap 地图系统",
+        "角色动画",
+        "敌人 AI",
+        "收集品系统",
+        "关卡设计",
+        "音效系统"
+      ],
+      "files": {
+        "package.json": {
+          "dependencies": {
+            "phaser": "^3.90.0"
+          },
+          "devDependencies": {
+            "vite": "^5.0.0",
+            "eslint": "^8.0.0"
+          }
+        }
+      }
+    },
+    "shooter": {
+      "name": "射击游戏模板",
+      "description": "包含射击机制、敌人生成、分数系统的射击游戏模板",
+      "features": [
+        "射击系统",
+        "敌人生成器",
+        "粒子效果",
+        "分数系统",
+        "生命值管理",
+        "关卡进度"
+      ],
+      "files": {
+        "package.json": {
+          "dependencies": {
+            "phaser": "^3.90.0"
+          },
+          "devDependencies": {
+            "vite": "^5.0.0",
+            "eslint": "^8.0.0"
+          }
+        }
+      }
+    },
+    "puzzle": {
+      "name": "益智游戏模板",
+      "description": "包含网格系统、匹配逻辑、关卡编辑器的益智游戏模板",
+      "features": [
+        "网格系统",
+        "匹配算法",
+        "关卡编辑器",
+        "动画效果",
+        "分数计算",
+        "关卡进度保存"
+      ],
+      "files": {
+        "package.json": {
+          "dependencies": {
+            "phaser": "^3.90.0"
+          },
+          "devDependencies": {
+            "vite": "^5.0.0",
+            "eslint": "^8.0.0"
+          }
+        }
+      }
+    }
+  },
+  "configurations": {
+    "development": {
+      "vite": {
+        "server": {
+          "port": 3000,
+          "open": true,
+          "host": true
+        },
+        "build": {
+          "sourcemap": true
+        }
+      },
+      "phaser": {
+        "physics": {
+          "default": "arcade",
+          "arcade": {
+            "debug": true
+          }
+        }
+      }
+    },
+    "production": {
+      "vite": {
+        "build": {
+          "sourcemap": false,
+          "minify": true,
+          "rollupOptions": {
+            "output": {
+              "manualChunks": {
+                "phaser": ["phaser"]
+              }
+            }
+          }
+        }
+      },
+      "phaser": {
+        "physics": {
+          "default": "arcade",
+          "arcade": {
+            "debug": false
+          }
+        }
+      }
+    }
+  },
+  "assets": {
+    "sprites": {
+      "player": {
+        "path": "assets/sprites/player.png",
+        "frameWidth": 32,
+        "frameHeight": 32
+      },
+      "enemy": {
+        "path": "assets/sprites/enemy.png",
+        "frameWidth": 32,
+        "frameHeight": 32
+      },
+      "tiles": {
+        "path": "assets/tilesets/tiles.png",
+        "frameWidth": 32,
+        "frameHeight": 32
+      }
+    },
+    "audio": {
+      "bgm": {
+        "path": "assets/audio/bgm.mp3",
+        "loop": true
+      },
+      "jump": {
+        "path": "assets/audio/jump.wav"
+      },
+      "collect": {
+        "path": "assets/audio/collect.wav"
+      }
+    },
+    "maps": {
+      "level1": {
+        "path": "assets/maps/level1.json",
+        "format": "tiled"
+      }
+    }
+  },
+  "scripts": {
+    "common": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "lint": "eslint src --ext .js",
+      "lint:fix": "eslint src --ext .js --fix"
+    },
+    "development": {
+      "dev:debug": "vite --mode development",
+      "test": "echo \"No tests specified\" && exit 0"
+    },
+    "production": {
+      "build:prod": "vite build --mode production",
+      "analyze": "vite build --mode production --analyze"
+    }
+  }
+}

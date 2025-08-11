@@ -1,0 +1,37 @@
+{
+  "name": "phaser-game-dev-tools",
+  "version": "1.0.0",
+  "description": "游戏开发资源处理工具集",
+  "main": "index.js",
+  "scripts": {
+    "audio-convert": "node audio-converter.js",
+    "sprite-optimize": "node sprite-optimizer.js",
+    "help": "echo '使用说明:\nnpm run audio-convert -- help\nnpm run sprite-optimize -- help'"
+  },
+  "keywords": [
+    "phaser",
+    "game-development",
+    "audio",
+    "sprites",
+    "optimization"
+  ],
+  "author": "Phaser Tutorial Team",
+  "license": "MIT",
+  "bin": {
+    "audio-converter": "./audio-converter.js",
+    "sprite-optimizer": "./sprite-optimizer.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/phaser-tutorial-handbook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/phaser-tutorial-handbook/issues"
+  },
+  "homepage": "https://github.com/your-repo/phaser-tutorial-handbook#readme"
+}

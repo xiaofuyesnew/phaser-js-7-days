@@ -1,0 +1,30 @@
+{
+  "name": "day5-enemy-collision",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Day 5: 敌人与碰撞检测 - Phaser.js 7天教程",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "exercise1": "vite --config vite.config.js --mode exercise1",
+    "exercise2": "vite --config vite.config.js --mode exercise2",
+    "exercise3": "vite --config vite.config.js --mode exercise3",
+    "demo": "vite --config vite.config.js --mode demo"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "keywords": [
+    "phaser",
+    "game-development",
+    "javascript",
+    "ai",
+    "collision-detection",
+    "tutorial"
+  ]
+}

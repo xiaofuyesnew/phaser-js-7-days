@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="Phaser.js游戏开发教程 - Day 7: 游戏部署与优化示例" />
+    <meta name="keywords" content="phaser, game, javascript, html5, optimization, deployment" />
+    <meta name="author" content="Phaser Game Developer" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Phaser.js优化示例游戏" />
+    <meta property="og:description" content="展示游戏性能优化、响应式设计和部署最佳实践的完整示例" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/game-preview.png" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Phaser.js优化示例游戏" />
+    <meta name="twitter:description" content="展示游戏性能优化、响应式设计和部署最佳实践的完整示例" />
+    
+    <!-- PWA -->
+    <meta name="theme-color" content="#2c3e50" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Phaser Game" />
+    
+    <!-- iOS Safari -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    
+    <!-- Microsoft -->
+    <meta name="msapplication-TileColor" content="#2c3e50" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/main.js" as="script" />
+    <link rel="preload" href="/src/style/index.css" as="style" />
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    
+    <title>Phaser.js 游戏优化示例</title>
+  </head>
+  <body>
+    <!-- 游戏容器 -->
+    <div id="game"></div>
+    
+    <!-- 加载屏幕 -->
+    <div id="loading-screen">
+      <div class="loading-content">
+        <div class="loading-icon">🎮</div>
+        <div class="loading-text">Loading Game...</div>
+        <div class="loading-bar-container">
+          <div id="loading-bar" class="loading-bar"></div>
+        </div>
+        <div style="margin-top: 10px; font-size: 12px; color: #888;">
+          正在加载游戏资源...
+        </div>
+      </div>
+    </div>
+    
+    <!-- 全屏按钮 (仅移动端显示) -->
+    <button id="fullscreen-btn" class="fullscreen-button" title="全屏模式">
+      ⛶
+    </button>
+    
+    <!-- 错误回退内容 -->
+    <noscript>
+      <div class="error-screen">
+        <div class="error-content">
+          <div class="error-icon">⚠️</div>
+          <h1 class="error-title">需要启用JavaScript</h1>
+          <p class="error-message">
+            此游戏需要JavaScript才能运行。请在浏览器设置中启用JavaScript，然后刷新页面。
+          </p>
+          <div class="error-actions">
+            <button class="error-button primary" onclick="location.reload()">
+              刷新页面
+            </button>
+          </div>
+        </div>
+      </div>
+    </noscript>
+    
+    <!-- 游戏脚本 -->
+    <script type="module" src="/src/main.js"></script>
+    
+    <!-- 全屏按钮脚本 -->
+    <script>
+      // 全屏按钮功能
+      document.addEventListener('DOMContentLoaded', function() {
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        
+        if (fullscreenBtn) {
+          fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+              document.documentElement.requestFullscreen().catch(err => {
+                console.log('无法进入全屏模式:', err);
+              });
+            } else {
+              document.exitFullscreen();
+            }
+          });
+          
+          // 监听全屏状态变化
+          document.addEventListener('fullscreenchange', function() {
+            if (document.fullscreenElement) {
+              fullscreenBtn.innerHTML = '⛶';
+              fullscreenBtn.title = '退出全屏';
+            } else {
+              fullscreenBtn.innerHTML = '⛶';
+              fullscreenBtn.title = '全屏模式';
+            }
+          });
+        }
+        
+        // 简单的加载进度模拟
+        let progress = 0;
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        const updateProgress = () => {
+          progress += Math.random() * 15;
+          if (progress > 100) progress = 100;
+          
+          if (loadingBar) {
+            loadingBar.style.width = progress + '%';
+          }
+          
+          if (progress < 100) {
+            setTimeout(updateProgress, 100 + Math.random() * 200);
+          }
+        };
+        
+        // 开始加载动画
+        updateProgress();
+        
+        // 当游戏真正加载完成时隐藏加载屏幕
+        window.addEventListener('gameLoaded', () => {
+          if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+              loadingScreen.remove();
+            }, 500);
+          }
+        });
+        
+        // 错误处理
+        window.addEventListener('error', (event) => {
+          console.error('页面错误:', event.error);
+        });
+        
+        window.addEventListener('unhandledrejection', (event) => {
+          console.error('未处理的Promise拒绝:', event.reason);
+        });
+      });
+      
+      // 性能监控
+      if ('performance' in window) {
+        window.addEventListener('load', () => {
+          setTimeout(() => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+              console.log('页面加载性能:', {
+                DNS: perfData.domainLookupEnd - perfData.domainLookupStart,
+                TCP: perfData.connectEnd - perfData.connectStart,
+                Request: perfData.responseStart - perfData.requestStart,
+                Response: perfData.responseEnd - perfData.responseStart,
+                DOM: perfData.domContentLoadedEventEnd - perfData.responseEnd,
+                Total: perfData.loadEventEnd - perfData.navigationStart
+              });
+            }
+          }, 0);
+        });
+      }
+      
+      // Service Worker 注册 (如果可用)
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
